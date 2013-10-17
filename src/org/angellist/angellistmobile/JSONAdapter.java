@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.fedorvlasov.lazylist.ImageLoader;
+
 import android.app.Activity;
 import android.text.Html;
 import android.util.Log;
@@ -21,12 +23,14 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 
     private final Activity activity;
     private final JSONArray jsonArray;
+    public ImageLoader imageLoader;
     JSONAdapter(Activity activity, JSONArray jsonArray) {
         assert activity != null;
         assert jsonArray != null;
 
         this.jsonArray = jsonArray;
         this.activity = activity;
+        imageLoader=new ImageLoader(activity.getApplicationContext());
     }
 
 
@@ -60,6 +64,8 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 			
 				type = jsonObject.getJSONObject("item").getString("type");
 			
+				textView.setText("-");
+				imageView.setImageResource(R.drawable.ic_launcher);
 				Log.d(type,jsonObject.toString());
 	        	if("Follow".equals(type))
 	        	{
@@ -67,6 +73,8 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 	            	
 	        		//String actor = jsonObject.getJSONObject("actor").getString("name");
 	        		//String target = jsonObject.getJSONObject("target").getString("name");
+	        		String image = jsonObject.getJSONObject("actor").getString("image");
+	        		imageLoader.DisplayImage(image, imageView);
 	        		String description = jsonObject.getString("description");
 	        		
 	        		
@@ -154,7 +162,6 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 	        	}
         	
         	} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	
