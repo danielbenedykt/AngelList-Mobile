@@ -118,7 +118,6 @@ public class LoginActivity extends Activity {
 	     */
 	    @Override
 	    protected void onPostExecute(String result) {
-	        String a ="a";
 	        //access_token
 	        String accessToken = Parser.parseAccessToken(result);
 	        
