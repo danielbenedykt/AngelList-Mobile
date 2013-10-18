@@ -19,6 +19,10 @@ along with AngelList Mobile. If not, see http://www.gnu.org/licenses/.
 
 package org.angellist.angellistmobile;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class Data {
 
 	private static String AccessToken = "";
@@ -31,6 +35,18 @@ public class Data {
 		Data.AccessToken = accessToken;
 	}
 	
+	public static void save(Activity activity)
+	{
+		SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString("AccessToken", AccessToken);
+		editor.commit();
+	}
 	
-	
+	public static void load(Activity activity)
+	{
+		SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+		//int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
+		AccessToken = sharedPref.getString("AccessToken", "");
+	}
 }
