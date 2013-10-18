@@ -16,21 +16,28 @@ You should have received a copy of the GNU General Public License
 along with AngelList Mobile. If not, see http://www.gnu.org/licenses/.
 */
 
-
 package org.angellist.angellistmobile;
 
-public class Data {
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
 
-	private static String AccessToken = "";
+public class UserActivity  extends Activity {
 
-	public static String getAccessToken() {
-		return AccessToken;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_user);
+		
+		
+
 	}
 
-	public static void setAccessToken(String accessToken) {
-		Data.AccessToken = accessToken;
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.login, menu);
+		return true;
 	}
-	
-	
-	
+
 }

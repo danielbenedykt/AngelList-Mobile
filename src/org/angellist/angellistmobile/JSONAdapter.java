@@ -1,16 +1,35 @@
-package org.angellist.angellistmobile;
+/*Copyright 2013 Daniel Benedykt
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+This file is part of AngelList Mobile.
+
+AngelList Mobile is free software: you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, either version 2 of the License, or 
+(at your option) any later version.
+
+AngelList Mobile is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License 
+along with AngelList Mobile. If not, see http://www.gnu.org/licenses/.
+*/
+
+
+package org.angellist.angellistmobile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.fedorvlasov.lazylist.ImageLoader;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import android.app.Activity;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +37,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.fedorvlasov.lazylist.ImageLoader;
 
 public class JSONAdapter extends BaseAdapter implements ListAdapter {
 
@@ -55,6 +76,7 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
             convertView = activity.getLayoutInflater().inflate(R.layout.row_feed, null);
 
         	TextView textView = (TextView) convertView.findViewById(R.id.label);
+        	textView.setMovementMethod(LinkMovementMethod.getInstance());
         	ImageView imageView = (ImageView) convertView.findViewById(R.id.logo);
         	JSONObject jsonObject = getItem(position);  
         	
@@ -75,7 +97,19 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 	        		//String target = jsonObject.getJSONObject("target").getString("name");
 	        		String image = jsonObject.getJSONObject("actor").getString("image");
 	        		imageLoader.DisplayImage(image, imageView);
-	        		String description = jsonObject.getString("description");
+	        		
+	        		//get the description and remove all tags
+	        		String descriptionHtml = jsonObject.getString("description");
+	        		String description = Html.fromHtml(descriptionHtml).toString();
+	        		
+	        		//for each link,  replace it with a link
+	        		Document doc = Jsoup.parse(descriptionHtml);
+	        		Elements links = doc.select("a[href]");
+	        		for (Element link : links) {
+	        			
+	        			description = description.replace(link.text(), "<a href=\"org.angellist.angellistmobile.user://"+link.attr("data-id")+"\">" + link.text() + "</a>");
+	        		
+	        		}
 	        		
 	        		
 	        		/*Pattern p1 = Pattern.compile("data-id=\\\"(\\d+)\\\"");
@@ -93,9 +127,9 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 	        		String nameTwo = m3.group(1);
 	        		*/
 	        		
-	        		description = Html.fromHtml(description).toString();
+	        		
 	        		//description = nameOne + " followed " + nameTwo;	        		
-	        		textView.setText(description);
+	        		textView.setText(Html.fromHtml(description));
 	        		
 	        	}
 	        	else if("Press".equals(type))
