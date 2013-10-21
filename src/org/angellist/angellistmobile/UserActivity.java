@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import android.widget.TextView;
 
 public class UserActivity extends Activity {
 
+	ProgressDialog mDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,7 +88,18 @@ public class UserActivity extends Activity {
 				e.printStackTrace();
 			}
 			
+			mDialog.dismiss();
+			
 
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			
+			mDialog = ProgressDialog.show(UserActivity.this, "", "Loading...", false);
+			
 		}
 
 	}

@@ -22,6 +22,7 @@ package org.angellist.angellistmobile;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +33,8 @@ import android.widget.ListView;
 
 public class FeedActivity extends Activity {
 
+	ProgressDialog mDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -105,8 +108,19 @@ public class FeedActivity extends Activity {
 	    	ListView listView = (ListView) findViewById(R.id.listViewFeed);
 			listView.setAdapter(new JSONAdapter(FeedActivity.this, result));
 			listView.setTextFilterEnabled(true);
+			
+			mDialog.dismiss();
 	        
 	    }
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			
+			mDialog = ProgressDialog.show(FeedActivity.this, "", "Loading...", false);
+			
+		}
 
 	}
 

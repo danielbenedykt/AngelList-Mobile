@@ -35,6 +35,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ import android.view.View;
 
 public class LoginActivity extends Activity {
 
+	ProgressDialog mDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -146,6 +149,17 @@ public class LoginActivity extends Activity {
 			Data.save(LoginActivity.this);
 			
 			goToFeedActivity();
+			
+			mDialog.dismiss();
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			
+			mDialog = ProgressDialog.show(LoginActivity.this, "", "Loading...", false);
+			
 		}
 	}
 
