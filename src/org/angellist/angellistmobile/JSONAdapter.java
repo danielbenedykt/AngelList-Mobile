@@ -93,6 +93,9 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 			textView.setText("-");
 			imageView.setImageResource(R.drawable.ic_launcher);
 			Log.d(type, jsonObject.toString());
+			String image = jsonObject.getJSONObject("actor").getString(
+					"image");
+			imageLoader.DisplayImage(image, imageView);
 			if ("Follow".equals(type)) {
 				// follow
 				// {"timestamp":"2013-10-17T15:16:46Z","id":"UyroZ","text":null,"promoted_by":[],"extra":null,"description":"<a
@@ -110,9 +113,7 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 				// Bergel"},"comments":0}
 
 				
-				String image = jsonObject.getJSONObject("actor").getString(
-						"image");
-				imageLoader.DisplayImage(image, imageView);
+				
 				String descriptionHtml = jsonObject.getString("description");
 				String description = this.replaceUserAndStartupLinks(descriptionHtml);
 				textView.setText(Html.fromHtml(description));
@@ -175,6 +176,10 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 				String description = this.replaceUserAndStartupLinks(descriptionHtml);
 				textView.setText(Html.fromHtml(description));
 			} else if ("JobListing".equals(type)) {
+				String descriptionHtml = jsonObject.getString("description");
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				textView.setText(Html.fromHtml(description));
+			} else if ("StartupPublish".equals(type)) {
 				String descriptionHtml = jsonObject.getString("description");
 				String description = this.replaceUserAndStartupLinks(descriptionHtml);
 				textView.setText(Html.fromHtml(description));
