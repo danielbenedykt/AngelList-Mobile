@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".WebViewActivity" />
         <activity android:name=".FeedActivity" android:theme="@android:style/Theme.Holo.Light"/>
+        <activity android:name=".AboutActivity" android:theme="@android:style/Theme.Holo.Light"/>
         
         <activity
             android:name="org.angellist.angellistmobile.UserActivity"

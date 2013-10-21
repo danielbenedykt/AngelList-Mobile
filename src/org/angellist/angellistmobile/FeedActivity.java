@@ -22,9 +22,11 @@ package org.angellist.angellistmobile;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 public class FeedActivity extends Activity {
@@ -49,7 +51,16 @@ public class FeedActivity extends Activity {
 		return true;
 	}
 	
-	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_about:
+	        	Intent intent = new Intent(this, AboutActivity.class);
+	    		startActivity(intent);
+	    }
+		return true;
+	}
 	
 	public class AsyncHttpGet extends AsyncTask<Void, Void, JSONArray> {
 	    
