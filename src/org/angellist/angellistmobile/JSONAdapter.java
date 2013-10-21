@@ -113,33 +113,8 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 				String image = jsonObject.getJSONObject("actor").getString(
 						"image");
 				imageLoader.DisplayImage(image, imageView);
-
-				// get the description and remove all tags
 				String descriptionHtml = jsonObject.getString("description");
-				String description = Html.fromHtml(descriptionHtml).toString();
-
-				// for each link, replace it with a link
-				Document doc = Jsoup.parse(descriptionHtml);
-				Elements links = doc.select("a[href]");
-				for (Element link : links) {
-					if ("User".equals(link.attr("data-type"))) {
-						description = description.replace(
-								link.text(),
-								"<a href=\"org.angellist.angellistmobile.user://"
-										+ link.attr("data-id") + "\">"
-										+ link.text() + "</a>");
-					} else if ("Startup".equals(link.attr("data-type"))) {
-						description = description.replace(
-								link.text(),
-								"<a href=\"org.angellist.angellistmobile.startup://"
-										+ link.attr("data-id") + "\">"
-										+ link.text() + "</a>");
-					}
-				}
-
-				
-
-				// description = nameOne + " followed " + nameTwo;
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
 				textView.setText(Html.fromHtml(description));
 
 			} else if ("Press".equals(type)) {
@@ -153,9 +128,9 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 				// press from
 				// philadelphia.cbslocal.com","likes":0,"item":{"type":"Press","ids":[85539]},"target":null,"actor":{"id":154252,"image":"https:\/\/s3.amazonaws.com\/photos.angel.co\/startups\/i\/154252-6e332013f324434792202151e21d8435-thumb_jpg.jpg?buster=1375709358","system_user?":null,"type":"Startup","angellist_url":"https:\/\/angel.co\/boppl","tagline":"Order
 				// and pay for food and drinks","name":"Boppl"},"comments":0}
-				String description = jsonObject.getString("description");
-				description = Html.fromHtml(description).toString();
-				textView.setText(description);
+				String descriptionHtml = jsonObject.getString("description");
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				textView.setText(Html.fromHtml(description));
 			} else if ("StartupRole".equals(type)) {
 				// startuprole
 				// {"timestamp":"2013-10-17T15:30:29Z","id":"Uys8P","text":null,"promoted_by":[],"extra":{"comment":null},"description":"<a
@@ -170,20 +145,9 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 				// Platforms"},"actor":{"id":104534,"image":"https:\/\/s3.amazonaws.com\/photos.angel.co\/users\/104534-medium_jpg?1331270245","system_user?":false,"type":"User","angellist_url":"https:\/\/angel.co\/jim-huston","tagline":"Early
 				// Stage Seed Investor at Portland Seed Fund","name":"Jim
 				// Huston"},"comments":0}
-				String description = jsonObject.getString("description");
-
-				/*
-				 * Pattern p1 = Pattern.compile("data-id=\\\"(\\d+)\\\"");
-				 * Matcher m1 = p1.matcher(description); m1.find(); String idOne
-				 * = m1.group(1); m1.find(); String idTwo = m1.group(1);
-				 * //data-type=\\"(\w+)\\" Pattern p3 =
-				 * Pattern.compile(">([^<]+)<\\/a>"); Matcher m3 =
-				 * p3.matcher(description); m3.find(); String nameOne =
-				 * m3.group(1); m3.find(); String nameTwo = m3.group(1);
-				 */
-
-				description = Html.fromHtml(description).toString();
-				textView.setText(description);
+				String descriptionHtml = jsonObject.getString("description");
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				textView.setText(Html.fromHtml(description));
 			} else if ("StatusUpdate".equals(type)) {
 				// statusupdate
 				// {"timestamp":"2013-10-17T15:11:37Z","id":"UyriB","text":"Haxlr8r
@@ -199,22 +163,21 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 				// mapping on PCs. co-coined term
 				// \"cloud computing\" in 1996. seed & venture capital investor.","name":"Sean O'Sullivan"},"comments":0}
 
-				String description = jsonObject.getString("description");
-				description = Html.fromHtml(description).toString();
-				String status = jsonObject.getString("text");
-				textView.setText(description + " - " + status);
+				String descriptionHtml = jsonObject.getString("description");
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				textView.setText(Html.fromHtml(description));
 			} else if ("Reservation".equals(type)) {
-				String description = jsonObject.getString("description");
-				description = Html.fromHtml(description).toString();
-				textView.setText(description);
+				String descriptionHtml = jsonObject.getString("description");
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				textView.setText(Html.fromHtml(description));
 			} else if ("Review".equals(type)) {
-				String description = jsonObject.getString("description");
-				description = Html.fromHtml(description).toString();
-				textView.setText(description);
+				String descriptionHtml = jsonObject.getString("description");
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				textView.setText(Html.fromHtml(description));
 			} else if ("JobListing".equals(type)) {
-				String description = jsonObject.getString("description");
-				description = Html.fromHtml(description).toString();
-				textView.setText(description);
+				String descriptionHtml = jsonObject.getString("description");
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				textView.setText(Html.fromHtml(description));
 			} else {
 				textView.setText(type);
 
@@ -225,5 +188,34 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 		}
 
 		return convertView;
+	}
+	
+	
+	public String replaceUserAndStartupLinks(String descriptionHtml)
+	{
+		// get the description and remove all tags
+		
+		String description = Html.fromHtml(descriptionHtml).toString();
+
+		// for each link, replace it with a link
+		Document doc = Jsoup.parse(descriptionHtml);
+		Elements links = doc.select("a[href]");
+		for (Element link : links) {
+			if ("User".equals(link.attr("data-type"))) {
+				description = description.replace(
+						link.text(),
+						"<a href=\"org.angellist.angellistmobile.user://"
+								+ link.attr("data-id") + "\">"
+								+ link.text() + "</a>");
+			} else if ("Startup".equals(link.attr("data-type"))) {
+				description = description.replace(
+						link.text(),
+						"<a href=\"org.angellist.angellistmobile.startup://"
+								+ link.attr("data-id") + "\">"
+								+ link.text() + "</a>");
+			}
+		}
+		
+		return description;
 	}
 }

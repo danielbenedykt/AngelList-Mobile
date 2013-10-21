@@ -42,7 +42,7 @@ public class ApiCalls {
 	
 	public static JSONArray GetActivityFeed()
 	{
-		String result = ApiCalls.GetData(ActivityFeedUrl);
+		String result = ApiCalls.GetData(ActivityFeedUrl + "&access_token=" + Data.getAccessToken());
 		try {
 			JSONObject jObject = new JSONObject(result);
 			return jObject.getJSONArray("feed");
