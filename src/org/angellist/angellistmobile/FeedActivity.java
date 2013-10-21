@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -61,6 +62,20 @@ public class FeedActivity extends Activity {
 	    }
 		return true;
 	}
+	
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    //Handle the back button
+	    if(keyCode == KeyEvent.KEYCODE_BACK) {
+	        //finish();
+	        this.moveTaskToBack(true);
+	        return true;
+	    }
+	    else {
+	        return super.onKeyDown(keyCode, event);
+	    }
+	}
+	
 	
 	public class AsyncHttpGet extends AsyncTask<Void, Void, JSONArray> {
 	    
