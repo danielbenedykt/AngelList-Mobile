@@ -183,6 +183,10 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 				String descriptionHtml = jsonObject.getString("description");
 				String description = this.replaceUserAndStartupLinks(descriptionHtml);
 				textView.setText(Html.fromHtml(description));
+			} else if ("Share".equals(type)) {
+				String descriptionHtml = jsonObject.getString("description");
+				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				textView.setText(Html.fromHtml(description));
 			} else {
 				textView.setText(type);
 
