@@ -36,6 +36,8 @@ import org.json.JSONObject;
  *
  */
 public class ApiCalls {
+	//private static final String UserRolesUrl1 = null;
+	private static final String UserRolesUrl2 = "/roles";
 	private static String ActivityFeedUrl = "https://api.angel.co/1/feed?personalized=1";
 	private static String UserUrl = "https://api.angel.co/1/users/";
 	private static String StartupUrl = "https://api.angel.co/1/startups/";
@@ -88,6 +90,22 @@ public class ApiCalls {
 		}
 		return null;
 	}
+	
+	public static JSONObject GetUserRolesInfo(String user) {
+		String result = ApiCalls.GetData(UserUrl + user+ UserRolesUrl2);
+		try {
+			JSONObject jObject = new JSONObject(result);
+			return jObject;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	 
+
+	
 
 	public static JSONObject GetStartupInfo(String startup) {
 		String result = ApiCalls.GetData(StartupUrl + startup);

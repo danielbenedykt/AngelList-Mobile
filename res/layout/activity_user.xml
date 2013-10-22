@@ -9,7 +9,7 @@
     tools:context=".FeedActivity" >
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imageViewUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -20,9 +20,9 @@
         android:id="@+id/textViewUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignBottom="@+id/imageViewUser"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_toRightOf="@+id/imageViewUser"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -35,5 +35,72 @@
         android:layout_below="@+id/textViewUserName"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/buttonTw"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageViewUser"
+        android:layout_below="@+id/textViewUserBio"
+        android:text="Tw" 
+        android:onClick="actionTw"/>
+
+    <Button
+        android:id="@+id/buttonFb"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/buttonTw"
+        android:layout_toRightOf="@+id/buttonTw"
+        android:text="Fb" 
+        android:onClick="actionFb"/>
+
+    <Button
+        android:id="@+id/buttonLI"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonFb"
+        android:layout_alignBottom="@+id/buttonFb"
+        android:layout_toRightOf="@+id/buttonFb"
+        android:text="LinkedIn" 
+        android:onClick="actionLI"/>
+
+    <Button
+        android:id="@+id/buttonBlog"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/buttonLI"
+        android:layout_toRightOf="@+id/buttonLI"
+        android:text="Blog" 
+        android:onClick="actionBlog"/>
+
+    <TextView
+        android:id="@+id/textViewLocations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonTw"
+        android:layout_alignRight="@+id/textViewUserBio"
+        android:layout_below="@+id/buttonTw"
+        android:text="Locations" />
+
+    <TextView
+        android:id="@+id/textViewRoles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewLocations"
+        android:layout_alignRight="@+id/textViewLocations"
+        android:layout_below="@+id/textViewLocations"
+        android:text="Roles" />
+
+    <ListView
+        android:id="@+id/listViewRoles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewRoles"
+        android:layout_below="@+id/textViewRoles" >
+    </ListView>
 
 </RelativeLayout>

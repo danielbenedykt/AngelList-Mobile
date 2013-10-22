@@ -39,13 +39,13 @@ import android.widget.TextView;
 
 import com.fedorvlasov.lazylist.ImageLoader;
 
-public class JSONAdapter extends BaseAdapter implements ListAdapter {
+public class FeedJSONAdapter extends BaseAdapter implements ListAdapter {
 
 	private final Activity activity;
 	private final JSONArray jsonArray;
 	public ImageLoader imageLoader;
 
-	JSONAdapter(Activity activity, JSONArray jsonArray) {
+	FeedJSONAdapter(Activity activity, JSONArray jsonArray) {
 		assert activity != null;
 		assert jsonArray != null;
 
@@ -166,6 +166,7 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 
 				String descriptionHtml = jsonObject.getString("description");
 				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				description = description + "<br>" + jsonObject.getString("text");
 				textView.setText(Html.fromHtml(description));
 			} else if ("Reservation".equals(type)) {
 				String descriptionHtml = jsonObject.getString("description");
@@ -174,6 +175,7 @@ public class JSONAdapter extends BaseAdapter implements ListAdapter {
 			} else if ("Review".equals(type)) {
 				String descriptionHtml = jsonObject.getString("description");
 				String description = this.replaceUserAndStartupLinks(descriptionHtml);
+				description = description + "<br>" + jsonObject.getString("text");
 				textView.setText(Html.fromHtml(description));
 			} else if ("JobListing".equals(type)) {
 				String descriptionHtml = jsonObject.getString("description");

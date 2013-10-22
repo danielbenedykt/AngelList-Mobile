@@ -106,7 +106,7 @@ public class FeedActivity extends Activity {
 	    protected void onPostExecute(JSONArray result) {
 	        //access_token
 	    	ListView listView = (ListView) findViewById(R.id.listViewFeed);
-			listView.setAdapter(new JSONAdapter(FeedActivity.this, result));
+			listView.setAdapter(new FeedJSONAdapter(FeedActivity.this, result));
 			listView.setTextFilterEnabled(true);
 			
 			mDialog.dismiss();
