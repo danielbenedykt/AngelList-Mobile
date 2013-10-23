@@ -89,12 +89,43 @@ public class UserRolesJSONAdapter extends BaseAdapter implements ListAdapter {
 			textView.setText("-");
 			imageView.setImageResource(R.drawable.ic_launcher);
 			String image = jsonObject.getJSONObject("startup").getString("logo_url");
+			String startupId = jsonObject.getJSONObject("startup").getString("id");
 			imageLoader.DisplayImage(image, imageView);
 			
 			String role = jsonObject.getString("role");
 			String name = jsonObject.getJSONObject("startup").getString("name");
 			
-			textView.setText(name + " - " + role);
+			if("referrer".equals(role))
+			{
+				role = "Referrer";
+			}
+			else if("board_member".equals(role))
+			{
+				role = "Board Member";
+			}else if("employee".equals(role))
+			{
+				role = "Employee";
+			}else if("past_investor".equals(role))
+			{
+				role = "Past Investor";
+			}else if("founder".equals(role))
+			{
+				role = "Founder";
+			}else if("customer".equals(role))
+			{
+				role = "Customer";
+			}else if("mentor".equals(role))
+			{
+				role = "Mentor";
+			}else if("advisor".equals(role))
+			{
+				role = "Advisor";
+			}
+			String allText = "";
+			allText = "<a href=\"org.angellist.angellistmobile.startup://"
+					+ startupId + "\">"
+					+ name + "</a>" + " - " + role;
+			textView.setText(Html.fromHtml(allText));
 
 		} catch (JSONException e) {
 			e.printStackTrace();
